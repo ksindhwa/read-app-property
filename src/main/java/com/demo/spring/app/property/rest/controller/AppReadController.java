@@ -1,9 +1,13 @@
 package com.demo.spring.app.property.rest.controller;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,8 +29,11 @@ public class AppReadController {
 	
 	Logger logger = LoggerFactory.getLogger(AppReadController.class);
 	
-	@RequestMapping(method = RequestMethod.GET,value="/demo")
-	public String getLoggerMessage() {
+	@RequestMapping(method = RequestMethod.GET,value="/demo/{id}")
+	public String getLoggerMessage(@PathVariable @Valid @Size(min=3,max=10,message="enter a valid integer") int id) {
+		
+	config.testConstraint(id);
+		
 		logger.info("this is logger info msg");
 		logger.error("This is logger error msg");
 		
@@ -41,6 +48,7 @@ public class AppReadController {
 		logger.info(config.getSysAppUrl());
 		logger.info(config.getSysAppUsername());
 		logger.info(config.getSysAppPassword());
+		logger.info(config.getTest());
 		
 		return appProperty1 + "  	" + appProperty2;
 		

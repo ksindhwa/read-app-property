@@ -1,5 +1,8 @@
 package com.demo.spring.app.property.rest.controller;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -11,6 +14,13 @@ public class ConfigClass {
 
 	
 	//myapp.properties config values
+	
+	@NotBlank(message="A url can not be empty")
+	String test = "";
+	
+	@Min(message="Enter a valid id", value = 5)
+	private int id;
+	
 	@Value("${myapp.url}")
 	private String myAppUrl;
 	
@@ -79,6 +89,22 @@ public class ConfigClass {
 
 	public void setMyAppPassword(String myAppPassword) {
 		this.myAppPassword = myAppPassword;
+	}
+
+	public String getTest() {
+		return test;
+	}
+
+	public void setTest(String test) {
+		this.test = test;
+	}
+
+	public void testConstraint(@Valid int id) {
+		// TODO Auto-generated method stub
+		
+		this.id = id;
+		System.out.println(id);
+		
 	}
 
 	
